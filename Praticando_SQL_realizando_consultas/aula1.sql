@@ -1,87 +1,77 @@
 /* 
 Objetivo:
-Inspecionar todos os dados disponíveis na tabela de clientes.
+Listar colaboradores do departamento de TI (D03) com salário acima de R$ 4.500.
 */
-SELECT * FROM TabelaClientes;
+SELECT nomecolaborador, salario, id_departamento
+FROM TabelaColaboradores 
+WHERE id_departamento = 'D03'
+  AND salario > 4500;
 
 
 /* 
 Objetivo:
-Listar os colaboradores juntamente com seus respectivos cargos.
+Listar clientes nascidos antes de 1990 ou residentes no estado de São Paulo.
 */
-SELECT nomecolaborador, cargo
-FROM TabelaColaboradores;
+SELECT nome, datanascimento, estado
+FROM TabelaClientes 
+WHERE DataNascimento < '1990-01-01'
+   OR estado = 'SP';
 
 
 /* 
 Objetivo:
-Identificar empréstimos atualmente ativos no sistema.
-
+Listar empréstimos concedidos no primeiro trimestre de 2023.
 */
-SELECT *
+SELECT id_emprestimo, datainicio, tipo, valor
 FROM TabelaEmprestimo
-WHERE status = TRUE;
+WHERE datainicio BETWEEN '2023-01-01' AND '2023-03-31';
 
 
 /* 
 Objetivo:
-Selecionar clientes residentes no estado de São Paulo (SP).
-
+Listar clientes com idade igual ou superior a 18 anos.
 */
-SELECT nome, estado
+SELECT Nome, DataNascimento, CPF
 FROM TabelaClientes
-WHERE estado = 'SP';
+WHERE EXTRACT(YEAR FROM CURRENT_DATE)
+    - EXTRACT(YEAR FROM DataNascimento) >= 18;
 
 
 /* 
 Objetivo:
-Identificar colaboradores com salário acima de um determinado
-limite financeiro.
-
+Listar empréstimos das categorias Pessoal e Imobiliário.
 */
-SELECT nomecolaborador, salario
-FROM TabelaColaboradores
-WHERE salario > 5000;
+SELECT id_emprestimo, tipo, valor
+FROM tabelaemprestimo
+WHERE tipo = 'Pessoal'
+   OR tipo = 'Imobiliário';
 
 
 /* 
 Objetivo:
-Organizar os colaboradores em ordem alfabética pelo nome.
+Listar empréstimos das categorias Consignado ou Automóvel com valores
+entre R$ 10.000 e R$ 50.000.
 */
-SELECT nomecolaborador, cargo
-FROM TabelaColaboradores
-ORDER BY nomecolaborador ASC;
+SELECT id_emprestimo, tipo, valor
+FROM tabelaemprestimo
+WHERE (tipo = 'Consignado' OR tipo = 'Automóvel')
+  AND valor BETWEEN 10000 AND 50000;
 
 
 /* 
 Objetivo:
-Obter uma amostra inicial dos colaboradores cadastrados.
-
+Listar os estados distintos onde há clientes cadastrados.
 */
-SELECT *
-FROM TabelaColaboradores
-ORDER BY id_colaborador ASC
-LIMIT 5;
+SELECT DISTINCT estado
+FROM tabelaclientes;
 
 
 /* 
 Objetivo:
-Exibir os empréstimos ordenados pelo valor financeiro.
-
+Listar clientes que moram no Rio de Janeiro ou Salvador e cujo CPF
+inicia com o dígito 6.
 */
-SELECT *
-FROM TabelaEmprestimo
-ORDER BY valor DESC;
-
-
-/* 
-Objetivo:
-Selecionar os colaboradores com os maiores salários acima
-de um valor mínimo definido.
-
-*/
-SELECT *
-FROM TabelaColaboradores
-WHERE salario > 5000
-ORDER BY id_colaborador DESC
-LIMIT 2;
+SELECT nome, cpf, cidade, estado
+FROM tabelaclientes
+WHERE (cidade = 'Rio de Janeiro' OR cidade = 'Salvador')
+  AND cpf LIKE '6%';
