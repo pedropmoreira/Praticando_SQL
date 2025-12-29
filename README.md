@@ -14,3 +14,6 @@
 - Filtre registros específicos com precisão
 - Organize resultados sem duplicatas
 
+# 3.0 Praticando SQL: entendendo funções de string
+
+- Pratique a utilização de funções de string para manipular os dados armazenados
